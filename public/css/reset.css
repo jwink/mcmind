@@ -59,6 +59,50 @@ a {
     background-color: red;
 }
 
+.white {
+    background-color: white;
+}
+
 #main {
     margin-top: 50px;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+
+body {
+    background-color: rgb(179, 220, 255);
+}
+
+.title_area {
+    text-align: center;
+    font-size: 40px;
+    color: turquoise;
+    background-color: hotpink;
+    height: 100px;
+    padding: 25px;
+    font-family: 'Barrio', cursive;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.in-middle {
+    margin-top: 100px;
+}
+
+.our-button {
+    text-align: center;
+}
+
+.our-button-sub {
+    text-align: center;
+    height: 100px;
+    width: 240px;
+    border-radius: 10px;
+    background-color: hotpink;
+    margin: auto;
+    border: 1pt solid black;
+    padding: 30px;
+    font-size: 40px;
+    font-family: 'Barrio', cursive;
+    color: turquoise;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }

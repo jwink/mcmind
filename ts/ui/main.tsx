@@ -1,13 +1,19 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as $ from 'jquery';
+import {TitleArea} from './titleSection';
+import {GameSection} from './gameSection';
+import {ChooseCode} from './chooseCode';
 
 class Navigation extends React.Component<any, any> {
+    constructor(props) {
+      super(props);
+      this.state = {whichColors: ["white", "yellow", "orange", "red", "purple", "green"]}
+    }
     setColors() {
         let colors = [];
-        let whichColors = ["white", "yellow", "orange", "red", "purple", "green"];
         let bindThis = this;
-        $.each(whichColors, function(idx, ele) {
+        $.each(bindThis.state.whichColors, function(idx, ele) {
             colors.push(<div key={idx} 
                              className="w3-col m2">
                                  <div onClick={bindThis.ballClicked.bind(bindThis, ele)} className={"ball " + ele}></div>
@@ -19,26 +25,56 @@ class Navigation extends React.Component<any, any> {
     ballClicked(color) {
       console.log(color);
     }
+    componentDidMount() {
+        let allColors = ["white", "yellow", "orange", "red", "purple", "green"];
+        function getIndex() {
+          let rand = Math.round((Math.random()*100));
+          return (rand % 6);
+        }
+        let bindThis = this;
+        function resetColor(){
+            let whichIndex = getIndex();
+            let whichColor = getIndex();
+            let currObj = bindThis.state.whichColors;
+            currObj[whichIndex] = allColors[whichColor];
+            bindThis.setState({whichColors: currObj});
+        }
+        let changeColor = setInterval(resetColor, 50);
+        setTimeout(function(){clearInterval(changeColor); bindThis.setState({whichColors: allColors}); }, 1000);
+    }
     render() {
         return (
-            <div className="w3-content">
+            <div className="w3-content in-middle">
                 <div className="w3-row">
                     {this.setColors()}
-                </div>    
-                <div className="w3-row">
-                    <div className="w3-col m2">s</div>
-                    <div className="w3-col m2"><div className="ball"></div></div>
-                    <div className="w3-col m2"></div>
-                    <div className="w3-col m2"></div>
-                    <div className="w3-col m2"></div>
-                    <div className="w3-col m2"></div>
-                </div>    
+                </div>
+                <div className="w3-row in-middle">
+                    <div className="w3-col w3-half our-button">
+                        <a href="#two" className="our-button-sub">2-Player</a>
+                    </div>    
+                    <div className="w3-col w3-half our-button">
+                        <a href="#one" className="our-button-sub">1-Player</a>
+                    </div>
+                </div>       
             </div>
         );
     }
 }
 
-
-
-
+ReactDOM.render(<TitleArea />, document.getElementById('title_section'));
 ReactDOM.render(<Navigation />, document.getElementById('main'));
+location.hash = "#nav";
+
+window.onhashchange = function() {
+    let whichClass = location.hash;
+    if (whichClass == '#nav') {
+      ReactDOM.render(<Navigation />, document.getElementById('main'));
+    } else if (whichClass=="#two") {
+      ReactDOM.render(<ChooseCode />, document.getElementById('main'));
+    } else if (whichClass=="#one") {
+      ReactDOM.render(<GameSection />, document.getElementById('main'));      
+    } else {
+      ReactDOM.render(<div>No Bueno</div>, document.getElementById('main'));
+    }
+}
+
