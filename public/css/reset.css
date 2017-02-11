@@ -1,0 +1,64 @@
+html,body, input, label, ul, li, div, nav, a,section, button{
+  background:transparent;
+  display:block;
+  font:inherit;
+  color:inherit;
+  margin: 0;
+  padding: 0;
+  border:0;
+  font-size: 100%;
+  display:block;
+}
+
+
+/*::-webkit-scrollbar{ background:transparent; }*/
+
+::-webkit-scrollbar{ display: none }
+
+
+ol, ul {
+	list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.group:after{
+  content:'';
+  display: block;
+  clear: both;
+}
+
+
+.ball {
+    height: 50px;
+    width: 50px;
+    margin: auto;
+    border-radius: 25px;
+    border: solid 1pt black;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.purple {
+    background-color: purple;
+}
+
+.orange {
+    background-color: darkorange;
+}
+
+.green {
+    background-color: mediumspringgreen;
+}
+
+.red {
+    background-color: red;
+}
+
+#main {
+    margin-top: 50px;
+}
