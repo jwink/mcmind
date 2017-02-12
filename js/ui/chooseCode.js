@@ -12,7 +12,8 @@ var ChooseCode = (function (_super) {
         var _this = _super.call(this, props) || this;
         _this.state = { whichColors: ["white", "yellow", "orange", "red", "purple", "green"],
             codeColors: ["lightgray", "lightgray", "lightgray", "lightgray"],
-            selectedBox: "none" };
+            selectedBox: "none",
+            codeSubmitted: false };
         return _this;
     }
     ChooseCode.prototype.setColors = function () {
@@ -33,7 +34,7 @@ var ChooseCode = (function (_super) {
         this.setState({ codeColors: currColors, selectedBox: "none" });
     };
     ChooseCode.prototype.boxSelected = function (section) {
-        console.log(section);
+        //console.log(section);
         if (this.state.selectedBox == section) {
             this.setState({ selectedBox: "none" });
         }
@@ -42,7 +43,18 @@ var ChooseCode = (function (_super) {
         }
     };
     ChooseCode.prototype.codeSubmit = function () {
-        console.log(this.state.codeColors);
+        if (this.state.codeColors.indexOf("lightgray") != -1) {
+            this.setState({ codeSubmitted: true });
+        }
+        else {
+            // console.log(this.state.codeColors);
+            // console.log(this.props);
+            this.setState({ whichColors: ["white", "yellow", "orange", "red", "purple", "green"],
+                codeColors: ["lightgray", "lightgray", "lightgray", "lightgray"],
+                selectedBox: "none",
+                codeSubmitted: false });
+            this.props.gameCallback(this.state.codeColors);
+        }
     };
     ChooseCode.prototype.codeChooser = function () {
         var bindThis = this;
@@ -62,13 +74,23 @@ var ChooseCode = (function (_super) {
         });
         return codeOutput;
     };
+    ChooseCode.prototype.submitMessage = function () {
+        if (this.state.codeSubmitted) {
+            return (React.createElement("div", { className: "w3-row some-distance submit-message" },
+                React.createElement("div", { className: "w3-col m12" }, "Code Is Incomplete!  Please Select All Four Colors...")));
+        }
+        else {
+            return "";
+        }
+    };
     ChooseCode.prototype.render = function () {
         return (React.createElement("div", { className: "w3-content in-middle" },
             React.createElement("div", { className: "w3-row" }, this.setColors()),
             React.createElement("div", { className: "w3-row in-middle" }, this.codeChooser()),
-            React.createElement("div", { className: "w3-row in-middle" },
-                React.createElement("div", { onClick: this.codeSubmit.bind(this), className: "w3-col w3-half our-button" },
-                    React.createElement("a", { href: location.hash, className: "our-button-sub" }, "Submit!")))));
+            React.createElement("div", { className: "w3-row some-distance" },
+                React.createElement("div", { onClick: this.codeSubmit.bind(this), className: "w3-col m12 our-button" },
+                    React.createElement("a", { href: location.hash, className: "our-button-sub" }, "Submit!"))),
+            this.submitMessage()));
     };
     return ChooseCode;
 }(React.Component));

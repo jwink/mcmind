@@ -6,7 +6,8 @@ export class ChooseCode extends React.Component<any, any> {
       super(props);
       this.state = {whichColors: ["white", "yellow", "orange", "red", "purple", "green"],
                     codeColors: ["lightgray", "lightgray", "lightgray", "lightgray"],
-                    selectedBox: "none"}
+                    selectedBox: "none",
+                    codeSubmitted: false}
     }
     setColors() {
         let colors = [];
@@ -29,7 +30,7 @@ export class ChooseCode extends React.Component<any, any> {
       this.setState({codeColors: currColors, selectedBox: "none"});
     }
     boxSelected(section) {
-        console.log(section);
+        //console.log(section);
         if (this.state.selectedBox == section) {
             this.setState({selectedBox: "none"});
         } else {
@@ -37,7 +38,17 @@ export class ChooseCode extends React.Component<any, any> {
         }
     }
     codeSubmit() {
-        console.log(this.state.codeColors);
+        if (this.state.codeColors.indexOf("lightgray") != -1) {
+            this.setState({codeSubmitted: true});
+        } else {
+            // console.log(this.state.codeColors);
+            // console.log(this.props);
+            this.setState({whichColors: ["white", "yellow", "orange", "red", "purple", "green"],
+                    codeColors: ["lightgray", "lightgray", "lightgray", "lightgray"],
+                    selectedBox: "none",
+                    codeSubmitted: false});
+            this.props.gameCallback(this.state.codeColors);
+        }
     }
     codeChooser() {
         let bindThis = this;
@@ -59,7 +70,20 @@ export class ChooseCode extends React.Component<any, any> {
                             </div>);
         });
         return codeOutput;
-    }    
+    }
+    submitMessage() {
+        if (this.state.codeSubmitted) {
+            return (
+                <div className="w3-row some-distance submit-message">
+                    <div className="w3-col m12">
+                        Code Is Incomplete!  Please Select All Four Colors...
+                    </div>    
+                </div>
+            );
+        } else {
+            return "";
+        }
+    }
     render() {
         return (
             <div className="w3-content in-middle">
@@ -67,11 +91,12 @@ export class ChooseCode extends React.Component<any, any> {
                     {this.setColors()}
                 </div>
                 <div className="w3-row in-middle">{this.codeChooser()}</div>
-                <div className="w3-row in-middle">
-                    <div onClick={this.codeSubmit.bind(this)} className="w3-col w3-half our-button">
+                <div className="w3-row some-distance">
+                    <div onClick={this.codeSubmit.bind(this)} className="w3-col m12 our-button">
                         <a href={location.hash} className="our-button-sub">Submit!</a>
                     </div>    
-                </div>                       
+                </div>
+                {this.submitMessage()}
             </div>
 
         );

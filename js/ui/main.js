@@ -65,7 +65,7 @@ window.onhashchange = function () {
         ReactDOM.render(React.createElement(Navigation, null), document.getElementById('main'));
     }
     else if (whichClass == "#two") {
-        ReactDOM.render(React.createElement(gameSection_1.GameSection, null), document.getElementById('main'));
+        ReactDOM.render(React.createElement(gameSection_1.GameSection, { codeSet: false, secretCode: [null, null, null, null] }), document.getElementById('main'));
     }
     else if (whichClass == "#one") {
         ReactDOM.render(React.createElement(gameSection_1.GameSection, null), document.getElementById('main'));

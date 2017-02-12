@@ -13,7 +13,8 @@ var ChooseCode = (function (_super) {
         var _this = _super.call(this, props) || this;
         _this.state = { whichColors: ["white", "yellow", "orange", "red", "purple", "green"],
             codeColors: ["lightgray", "lightgray", "lightgray", "lightgray"],
-            selectedBox: "none" };
+            selectedBox: "none",
+            codeSubmitted: false };
         return _this;
     }
     ChooseCode.prototype.setColors = function () {
@@ -34,7 +35,7 @@ var ChooseCode = (function (_super) {
         this.setState({ codeColors: currColors, selectedBox: "none" });
     };
     ChooseCode.prototype.boxSelected = function (section) {
-        console.log(section);
+        //console.log(section);
         if (this.state.selectedBox == section) {
             this.setState({ selectedBox: "none" });
         }
@@ -43,7 +44,18 @@ var ChooseCode = (function (_super) {
         }
     };
     ChooseCode.prototype.codeSubmit = function () {
-        console.log(this.state.codeColors);
+        if (this.state.codeColors.indexOf("lightgray") != -1) {
+            this.setState({ codeSubmitted: true });
+        }
+        else {
+            // console.log(this.state.codeColors);
+            // console.log(this.props);
+            this.setState({ whichColors: ["white", "yellow", "orange", "red", "purple", "green"],
+                codeColors: ["lightgray", "lightgray", "lightgray", "lightgray"],
+                selectedBox: "none",
+                codeSubmitted: false });
+            this.props.gameCallback(this.state.codeColors);
+        }
     };
     ChooseCode.prototype.codeChooser = function () {
         var bindThis = this;
@@ -63,13 +75,23 @@ var ChooseCode = (function (_super) {
         });
         return codeOutput;
     };
+    ChooseCode.prototype.submitMessage = function () {
+        if (this.state.codeSubmitted) {
+            return (React.createElement("div", { className: "w3-row some-distance submit-message" },
+                React.createElement("div", { className: "w3-col m12" }, "Code Is Incomplete!  Please Select All Four Colors...")));
+        }
+        else {
+            return "";
+        }
+    };
     ChooseCode.prototype.render = function () {
         return (React.createElement("div", { className: "w3-content in-middle" },
             React.createElement("div", { className: "w3-row" }, this.setColors()),
             React.createElement("div", { className: "w3-row in-middle" }, this.codeChooser()),
-            React.createElement("div", { className: "w3-row in-middle" },
-                React.createElement("div", { onClick: this.codeSubmit.bind(this), className: "w3-col w3-half our-button" },
-                    React.createElement("a", { href: location.hash, className: "our-button-sub" }, "Submit!")))));
+            React.createElement("div", { className: "w3-row some-distance" },
+                React.createElement("div", { onClick: this.codeSubmit.bind(this), className: "w3-col m12 our-button" },
+                    React.createElement("a", { href: location.hash, className: "our-button-sub" }, "Submit!"))),
+            this.submitMessage()));
     };
     return ChooseCode;
 }(React.Component));
@@ -83,36 +105,40 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var React = require("react");
-var $ = require("jquery");
 var chooseCode_1 = require("./chooseCode");
 var GameSection = (function (_super) {
     __extends(GameSection, _super);
     function GameSection(props) {
         var _this = _super.call(this, props) || this;
-        _this.state = { whichColors: ["white", "yellow", "orange", "red", "purple", "green"] };
+        _this.state = { codeSet: _this.props.codeSet, secretCode: _this.props.secretCode, guesses: [] };
         return _this;
     }
-    GameSection.prototype.setColors = function () {
-        var colors = [];
-        var bindThis = this;
-        $.each(bindThis.state.whichColors, function (idx, ele) {
-            colors.push(React.createElement("div", { key: idx, className: "w3-col m2" },
-                React.createElement("div", { onClick: bindThis.ballClicked.bind(bindThis, ele), className: "ball " + ele })));
-        });
-        return colors;
+    GameSection.prototype.onCodeSubmit = function (playerCode) {
+        this.setState({ secretCode: playerCode, codeSet: true });
     };
-    GameSection.prototype.ballClicked = function (color) {
-        console.log(color);
+    GameSection.prototype.onGuessSubmit = function (playerGuess) {
+        console.log(playerGuess);
+        var currGuesses = this.state.guesses;
+        currGuesses.unshift(playerGuess);
+        this.setState({ guesses: currGuesses });
+    };
+    GameSection.prototype.gameRenderer = function () {
+        if (this.state.codeSet) {
+            return (React.createElement(chooseCode_1.ChooseCode, { gameCallback: this.onGuessSubmit.bind(this) }));
+        }
+        else {
+            return (React.createElement(chooseCode_1.ChooseCode, { gameCallback: this.onCodeSubmit.bind(this) }));
+        }
     };
     GameSection.prototype.render = function () {
-        return (React.createElement("div", { className: "w3-content in-middle" },
-            React.createElement(chooseCode_1.ChooseCode, null)));
+        console.log(this.state);
+        return (React.createElement("div", { className: "w3-content in-middle" }, this.gameRenderer()));
     };
     return GameSection;
 }(React.Component));
 exports.GameSection = GameSection;
 
-},{"./chooseCode":1,"jquery":28,"react":181}],3:[function(require,module,exports){
+},{"./chooseCode":1,"react":181}],3:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -180,7 +206,7 @@ window.onhashchange = function () {
         ReactDOM.render(React.createElement(Navigation, null), document.getElementById('main'));
     }
     else if (whichClass == "#two") {
-        ReactDOM.render(React.createElement(gameSection_1.GameSection, null), document.getElementById('main'));
+        ReactDOM.render(React.createElement(gameSection_1.GameSection, { codeSet: false, secretCode: [null, null, null, null] }), document.getElementById('main'));
     }
     else if (whichClass == "#one") {
         ReactDOM.render(React.createElement(gameSection_1.GameSection, null), document.getElementById('main'));

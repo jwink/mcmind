@@ -6,27 +6,31 @@ import {ChooseCode} from './chooseCode';
 export class GameSection extends React.Component<any, any> {
     constructor(props) {
       super(props);
-      this.state = {whichColors: ["white", "yellow", "orange", "red", "purple", "green"]}
+      this.state = {codeSet: this.props.codeSet, secretCode: this.props.secretCode, guesses: []};
     }
-    setColors() {
-        let colors = [];
-        let bindThis = this;
-        $.each(bindThis.state.whichColors, function(idx, ele) {
-            colors.push(<div key={idx} 
-                             className="w3-col m2">
-                                 <div onClick={bindThis.ballClicked.bind(bindThis, ele)} className={"ball " + ele}></div>
-                        </div>);
-
-        });
-        return colors
+    onCodeSubmit(playerCode) {
+        this.setState({secretCode: playerCode, codeSet: true});
     }
-    ballClicked(color) {
-      console.log(color);
-    }    
+    onGuessSubmit(playerGuess) {
+        console.log(playerGuess);
+        let currGuesses = this.state.guesses;
+        currGuesses.unshift(playerGuess);
+        this.setState({guesses: currGuesses});
+    }
+    gameRenderer() {
+        if (this.state.codeSet) {
+            return(<ChooseCode gameCallback={this.onGuessSubmit.bind(this)} />);
+        } else {
+            return(
+                <ChooseCode gameCallback={this.onCodeSubmit.bind(this)} />
+            );
+        }
+    }
     render() {
+        console.log(this.state);
         return (
             <div className="w3-content in-middle">
-                <ChooseCode />
+                {this.gameRenderer()}
             </div>
 
         );

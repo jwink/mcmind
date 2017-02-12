@@ -85,7 +85,11 @@ body {
 }
 
 .in-middle {
-    margin-top: 100px;
+    margin-top: 50px;
+}
+
+.some-distance {
+    margin-top: 20px;
 }
 
 .our-button {
@@ -106,6 +110,18 @@ body {
     color: turquoise;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
+
+.submit-message {
+    text-align: center;
+    border-radius: 10px;
+    margin: auto;
+    padding: 30px;
+    font-size: 30px;
+    font-family: 'Barrio', cursive;
+    color: hotpink;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;    
+}
+
 
 .code-box {
     height: 90px;
