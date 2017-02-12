@@ -4,7 +4,9 @@ import * as $ from 'jquery';
 export class ChooseCode extends React.Component<any, any> {
     constructor(props) {
       super(props);
-      this.state = {whichColors: ["white", "yellow", "orange", "red", "purple", "green"]}
+      this.state = {whichColors: ["white", "yellow", "orange", "red", "purple", "green"],
+                    codeColors: ["lightgray", "lightgray", "lightgray", "lightgray"],
+                    selectedBox: "none"}
     }
     setColors() {
         let colors = [];
@@ -19,7 +21,41 @@ export class ChooseCode extends React.Component<any, any> {
         return colors
     }
     ballClicked(color) {
-      console.log(color);
+      let codeSections = ["sec1", "sec2", "sec3", "sec4"];
+      let currColors = this.state.codeColors;
+      if (codeSections.indexOf(this.state.selectedBox) != -1) {
+          currColors[codeSections.indexOf(this.state.selectedBox)] = color;
+      }
+      this.setState({codeColors: currColors, selectedBox: "none"});
+    }
+    boxSelected(section) {
+        console.log(section);
+        if (this.state.selectedBox == section) {
+            this.setState({selectedBox: "none"});
+        } else {
+            this.setState({selectedBox: section});
+        }
+    }
+    codeChooser() {
+        let bindThis = this;
+        let codeOutput = [];
+        let codeSections = ["sec1", "sec2", "sec3", "sec4"];
+        $.each(bindThis.state.codeColors, function(idx, ele) {
+            let boxClass = "";
+            if (bindThis.state.selectedBox == codeSections[idx]) {
+               boxClass = "code-box selected-box";
+            }  else {
+               boxClass = "code-box deselected-box";
+            }
+            codeOutput.push(<div key={idx} className="w3-col m3">
+                                <div onClick={bindThis.boxSelected.bind(bindThis,codeSections[idx])}
+                                     className={boxClass}>
+                                     <div className={"ball " + ele}>
+                                     </div>
+                                </div>
+                            </div>);
+        });
+        return codeOutput;
     }    
     render() {
         return (
@@ -27,7 +63,7 @@ export class ChooseCode extends React.Component<any, any> {
                 <div className="w3-row">
                     {this.setColors()}
                 </div>
-                <div>Hello World</div>
+                <div className="w3-row in-middle">{this.codeChooser()}</div>
             </div>
 
         );

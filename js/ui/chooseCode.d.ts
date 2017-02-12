@@ -4,5 +4,7 @@ export declare class ChooseCode extends React.Component<any, any> {
     constructor(props: any);
     setColors(): any[];
     ballClicked(color: any): void;
+    boxSelected(section: any): void;
+    codeChooser(): any[];
     render(): JSX.Element;
 }

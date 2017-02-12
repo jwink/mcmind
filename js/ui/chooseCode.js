@@ -10,7 +10,9 @@ var ChooseCode = (function (_super) {
     __extends(ChooseCode, _super);
     function ChooseCode(props) {
         var _this = _super.call(this, props) || this;
-        _this.state = { whichColors: ["white", "yellow", "orange", "red", "purple", "green"] };
+        _this.state = { whichColors: ["white", "yellow", "orange", "red", "purple", "green"],
+            codeColors: ["lightgray", "lightgray", "lightgray", "lightgray"],
+            selectedBox: "none" };
         return _this;
     }
     ChooseCode.prototype.setColors = function () {
@@ -23,12 +25,44 @@ var ChooseCode = (function (_super) {
         return colors;
     };
     ChooseCode.prototype.ballClicked = function (color) {
-        console.log(color);
+        var codeSections = ["sec1", "sec2", "sec3", "sec4"];
+        var currColors = this.state.codeColors;
+        if (codeSections.indexOf(this.state.selectedBox) != -1) {
+            currColors[codeSections.indexOf(this.state.selectedBox)] = color;
+        }
+        this.setState({ codeColors: currColors, selectedBox: "none" });
+    };
+    ChooseCode.prototype.boxSelected = function (section) {
+        console.log(section);
+        if (this.state.selectedBox == section) {
+            this.setState({ selectedBox: "none" });
+        }
+        else {
+            this.setState({ selectedBox: section });
+        }
+    };
+    ChooseCode.prototype.codeChooser = function () {
+        var bindThis = this;
+        var codeOutput = [];
+        var codeSections = ["sec1", "sec2", "sec3", "sec4"];
+        $.each(bindThis.state.codeColors, function (idx, ele) {
+            var boxClass = "";
+            if (bindThis.state.selectedBox == codeSections[idx]) {
+                boxClass = "code-box selected-box";
+            }
+            else {
+                boxClass = "code-box deselected-box";
+            }
+            codeOutput.push(React.createElement("div", { key: idx, className: "w3-col m3" },
+                React.createElement("div", { onClick: bindThis.boxSelected.bind(bindThis, codeSections[idx]), className: boxClass },
+                    React.createElement("div", { className: "ball " + ele }))));
+        });
+        return codeOutput;
     };
     ChooseCode.prototype.render = function () {
         return (React.createElement("div", { className: "w3-content in-middle" },
             React.createElement("div", { className: "w3-row" }, this.setColors()),
-            React.createElement("div", null, "Hello World")));
+            React.createElement("div", { className: "w3-row in-middle" }, this.codeChooser())));
     };
     return ChooseCode;
 }(React.Component));
