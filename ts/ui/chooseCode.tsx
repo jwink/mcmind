@@ -86,11 +86,11 @@ export class ChooseCode extends React.Component<any, any> {
     }
     render() {
         return (
-            <div className="w3-content in-middle">
+            <div className="w3-content some-distance">
                 <div className="w3-row">
                     {this.setColors()}
                 </div>
-                <div className="w3-row in-middle">{this.codeChooser()}</div>
+                <div className="w3-row some-distance">{this.codeChooser()}</div>
                 <div className="w3-row some-distance">
                     <div onClick={this.codeSubmit.bind(this)} className="w3-col m12 our-button">
                         <a href={location.hash} className="our-button-sub">Submit!</a>

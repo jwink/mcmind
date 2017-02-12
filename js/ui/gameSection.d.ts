@@ -5,5 +5,7 @@ export declare class GameSection extends React.Component<any, any> {
     onCodeSubmit(playerCode: any): void;
     onGuessSubmit(playerGuess: any): void;
     gameRenderer(): JSX.Element;
+    renderEachBall(guessArr: any): any[];
+    renderGuesses(): any[] | "";
     render(): JSX.Element;
 }

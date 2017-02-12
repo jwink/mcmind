@@ -84,9 +84,9 @@ var ChooseCode = (function (_super) {
         }
     };
     ChooseCode.prototype.render = function () {
-        return (React.createElement("div", { className: "w3-content in-middle" },
+        return (React.createElement("div", { className: "w3-content some-distance" },
             React.createElement("div", { className: "w3-row" }, this.setColors()),
-            React.createElement("div", { className: "w3-row in-middle" }, this.codeChooser()),
+            React.createElement("div", { className: "w3-row some-distance" }, this.codeChooser()),
             React.createElement("div", { className: "w3-row some-distance" },
                 React.createElement("div", { onClick: this.codeSubmit.bind(this), className: "w3-col m12 our-button" },
                     React.createElement("a", { href: location.hash, className: "our-button-sub" }, "Submit!"))),
