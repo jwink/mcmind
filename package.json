@@ -1,7 +1,6 @@
 {
   "scripts": {
-    "start": "node ./js/app.js",
-    "postinstall": "grunt"
+    "start": "node ./js/app.js"
   },
   "license": "MIT",
   "dependencies": {
@@ -17,12 +16,12 @@
     "react": "^15.2.0",
     "react-dom": "^15.2.0"
   },
+  "engines": {
+    "node": "6.9.1"
+  },  
   "devDependencies": {
     "browserify": "^12.0.1",
     "path": "^0.12.7",
-    "grunt": "^1.0.1",
-    "grunt-browserify": "^5.0.0",
-    "typescript": "^2.1.4",
-    "grunt-ts": "^6.0.0-beta.6"
+    "typescript": "^2.1.4"
   }
 }
