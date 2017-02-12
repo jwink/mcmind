@@ -1,6 +1,7 @@
 
 import * as React from 'react';
 import * as $ from 'jquery';
+import {ChooseCode} from './chooseCode';
 
 export class GameSection extends React.Component<any, any> {
     constructor(props) {
@@ -25,9 +26,7 @@ export class GameSection extends React.Component<any, any> {
     render() {
         return (
             <div className="w3-content in-middle">
-                <div className="w3-row">
-                    {this.setColors()}
-                </div>
+                <ChooseCode />
             </div>
 
         );

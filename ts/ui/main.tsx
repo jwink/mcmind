@@ -70,7 +70,7 @@ window.onhashchange = function() {
     if (whichClass == '#nav') {
       ReactDOM.render(<Navigation />, document.getElementById('main'));
     } else if (whichClass=="#two") {
-      ReactDOM.render(<ChooseCode />, document.getElementById('main'));
+      ReactDOM.render(<GameSection />, document.getElementById('main'));
     } else if (whichClass=="#one") {
       ReactDOM.render(<GameSection />, document.getElementById('main'));      
     } else {

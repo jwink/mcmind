@@ -42,6 +42,9 @@ var ChooseCode = (function (_super) {
             this.setState({ selectedBox: section });
         }
     };
+    ChooseCode.prototype.codeSubmit = function () {
+        console.log(this.state.codeColors);
+    };
     ChooseCode.prototype.codeChooser = function () {
         var bindThis = this;
         var codeOutput = [];
@@ -63,7 +66,10 @@ var ChooseCode = (function (_super) {
     ChooseCode.prototype.render = function () {
         return (React.createElement("div", { className: "w3-content in-middle" },
             React.createElement("div", { className: "w3-row" }, this.setColors()),
-            React.createElement("div", { className: "w3-row in-middle" }, this.codeChooser())));
+            React.createElement("div", { className: "w3-row in-middle" }, this.codeChooser()),
+            React.createElement("div", { className: "w3-row in-middle" },
+                React.createElement("div", { onClick: this.codeSubmit.bind(this), className: "w3-col w3-half our-button" },
+                    React.createElement("a", { href: location.hash, className: "our-button-sub" }, "Submit!")))));
     };
     return ChooseCode;
 }(React.Component));
@@ -78,6 +84,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var React = require("react");
 var $ = require("jquery");
+var chooseCode_1 = require("./chooseCode");
 var GameSection = (function (_super) {
     __extends(GameSection, _super);
     function GameSection(props) {
@@ -99,13 +106,13 @@ var GameSection = (function (_super) {
     };
     GameSection.prototype.render = function () {
         return (React.createElement("div", { className: "w3-content in-middle" },
-            React.createElement("div", { className: "w3-row" }, this.setColors())));
+            React.createElement(chooseCode_1.ChooseCode, null)));
     };
     return GameSection;
 }(React.Component));
 exports.GameSection = GameSection;
 
-},{"jquery":28,"react":181}],3:[function(require,module,exports){
+},{"./chooseCode":1,"jquery":28,"react":181}],3:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -117,7 +124,6 @@ var ReactDOM = require("react-dom");
 var $ = require("jquery");
 var titleSection_1 = require("./titleSection");
 var gameSection_1 = require("./gameSection");
-var chooseCode_1 = require("./chooseCode");
 var Navigation = (function (_super) {
     __extends(Navigation, _super);
     function Navigation(props) {
@@ -174,7 +180,7 @@ window.onhashchange = function () {
         ReactDOM.render(React.createElement(Navigation, null), document.getElementById('main'));
     }
     else if (whichClass == "#two") {
-        ReactDOM.render(React.createElement(chooseCode_1.ChooseCode, null), document.getElementById('main'));
+        ReactDOM.render(React.createElement(gameSection_1.GameSection, null), document.getElementById('main'));
     }
     else if (whichClass == "#one") {
         ReactDOM.render(React.createElement(gameSection_1.GameSection, null), document.getElementById('main'));
@@ -184,7 +190,7 @@ window.onhashchange = function () {
     }
 };
 
-},{"./chooseCode":1,"./gameSection":2,"./titleSection":4,"jquery":28,"react":181,"react-dom":30}],4:[function(require,module,exports){
+},{"./gameSection":2,"./titleSection":4,"jquery":28,"react":181,"react-dom":30}],4:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];

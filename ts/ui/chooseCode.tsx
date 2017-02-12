@@ -36,6 +36,9 @@ export class ChooseCode extends React.Component<any, any> {
             this.setState({selectedBox: section});
         }
     }
+    codeSubmit() {
+        console.log(this.state.codeColors);
+    }
     codeChooser() {
         let bindThis = this;
         let codeOutput = [];
@@ -64,6 +67,11 @@ export class ChooseCode extends React.Component<any, any> {
                     {this.setColors()}
                 </div>
                 <div className="w3-row in-middle">{this.codeChooser()}</div>
+                <div className="w3-row in-middle">
+                    <div onClick={this.codeSubmit.bind(this)} className="w3-col w3-half our-button">
+                        <a href={location.hash} className="our-button-sub">Submit!</a>
+                    </div>    
+                </div>                       
             </div>
 
         );

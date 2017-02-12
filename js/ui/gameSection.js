@@ -6,6 +6,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var React = require("react");
 var $ = require("jquery");
+var chooseCode_1 = require("./chooseCode");
 var GameSection = (function (_super) {
     __extends(GameSection, _super);
     function GameSection(props) {
@@ -27,7 +28,7 @@ var GameSection = (function (_super) {
     };
     GameSection.prototype.render = function () {
         return (React.createElement("div", { className: "w3-content in-middle" },
-            React.createElement("div", { className: "w3-row" }, this.setColors())));
+            React.createElement(chooseCode_1.ChooseCode, null)));
     };
     return GameSection;
 }(React.Component));

@@ -9,7 +9,6 @@ var ReactDOM = require("react-dom");
 var $ = require("jquery");
 var titleSection_1 = require("./titleSection");
 var gameSection_1 = require("./gameSection");
-var chooseCode_1 = require("./chooseCode");
 var Navigation = (function (_super) {
     __extends(Navigation, _super);
     function Navigation(props) {
@@ -66,7 +65,7 @@ window.onhashchange = function () {
         ReactDOM.render(React.createElement(Navigation, null), document.getElementById('main'));
     }
     else if (whichClass == "#two") {
-        ReactDOM.render(React.createElement(chooseCode_1.ChooseCode, null), document.getElementById('main'));
+        ReactDOM.render(React.createElement(gameSection_1.GameSection, null), document.getElementById('main'));
     }
     else if (whichClass == "#one") {
         ReactDOM.render(React.createElement(gameSection_1.GameSection, null), document.getElementById('main'));

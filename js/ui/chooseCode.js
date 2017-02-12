@@ -41,6 +41,9 @@ var ChooseCode = (function (_super) {
             this.setState({ selectedBox: section });
         }
     };
+    ChooseCode.prototype.codeSubmit = function () {
+        console.log(this.state.codeColors);
+    };
     ChooseCode.prototype.codeChooser = function () {
         var bindThis = this;
         var codeOutput = [];
@@ -62,7 +65,10 @@ var ChooseCode = (function (_super) {
     ChooseCode.prototype.render = function () {
         return (React.createElement("div", { className: "w3-content in-middle" },
             React.createElement("div", { className: "w3-row" }, this.setColors()),
-            React.createElement("div", { className: "w3-row in-middle" }, this.codeChooser())));
+            React.createElement("div", { className: "w3-row in-middle" }, this.codeChooser()),
+            React.createElement("div", { className: "w3-row in-middle" },
+                React.createElement("div", { onClick: this.codeSubmit.bind(this), className: "w3-col w3-half our-button" },
+                    React.createElement("a", { href: location.hash, className: "our-button-sub" }, "Submit!")))));
     };
     return ChooseCode;
 }(React.Component));
