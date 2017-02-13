@@ -22,6 +22,7 @@ export class GameSection extends React.Component<any, any> {
     getPegs(playerGuess) {
         let pegResult = [null, null, null, null];
         let whitePegCount = 0;
+        let redPegCount = 0;
         let secretObj = {white: 0, yellow: 0, orange: 0, red:0, purple:0, green: 0};
         let guessObj = {white: 0, yellow: 0, orange: 0, red:0, purple:0, green: 0};
         $.each(this.state.secretCode, function(idx, ele) {
@@ -32,7 +33,25 @@ export class GameSection extends React.Component<any, any> {
         });        
         console.log(secretObj);
         console.log(guessObj);
-        pegResult = ["white", "white", "white", "white"];
+        $.each(secretObj, function(key, value) {
+            if(value - guessObj[key] > 0) {
+                whitePegCount += guessObj[key];
+            } else {
+                whitePegCount += value;
+            }
+        });
+        $.each(this.state.secretCode, function(idx, ele) {
+            if (ele == playerGuess[idx]) {
+                redPegCount += 1;
+            }
+        });
+        whitePegCount = whitePegCount - redPegCount;
+        for (var i=0; i<redPegCount; i++) {
+            pegResult[i] = "red";
+        }        
+        for (var i=0; i<whitePegCount; i++) {
+            pegResult[i+redPegCount] = "white";
+        }
         return pegResult;
     }
     gameRenderer() {
