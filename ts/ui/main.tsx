@@ -61,6 +61,20 @@ class Navigation extends React.Component<any, any> {
     }
 }
 
+function randomCode() {
+    let randCode = [];
+    let allColors = ["white", "yellow", "orange", "red", "purple", "green"];
+    function getIndex() {
+        let rand = Math.round((Math.random()*100));
+        return (rand % 6);
+    }
+    for (var i=0;i<4; i++) {
+      randCode.push(allColors[getIndex()]);
+    }
+    return randCode;  
+}
+
+
 ReactDOM.render(<TitleArea />, document.getElementById('title_section'));
 ReactDOM.render(<Navigation />, document.getElementById('main'));
 location.hash = "#nav";
@@ -72,7 +86,7 @@ window.onhashchange = function() {
     } else if (whichClass=="#two") {
       ReactDOM.render(<GameSection codeSet={false} secretCode={[null, null, null, null]}/>, document.getElementById('main'));
     } else if (whichClass=="#one") {
-      ReactDOM.render(<GameSection />, document.getElementById('main'));      
+      ReactDOM.render(<GameSection codeSet={true} secretCode={randomCode()} />, document.getElementById('main'));      
     } else {
       ReactDOM.render(<div>No Bueno</div>, document.getElementById('main'));
     }

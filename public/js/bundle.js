@@ -111,7 +111,7 @@ var GameSection = (function (_super) {
     __extends(GameSection, _super);
     function GameSection(props) {
         var _this = _super.call(this, props) || this;
-        _this.state = { codeSet: _this.props.codeSet, secretCode: _this.props.secretCode, guesses: [] };
+        _this.state = { codeSet: _this.props.codeSet, secretCode: _this.props.secretCode, guesses: [], pegs: [] };
         return _this;
     }
     GameSection.prototype.onCodeSubmit = function (playerCode) {
@@ -120,8 +120,26 @@ var GameSection = (function (_super) {
     GameSection.prototype.onGuessSubmit = function (playerGuess) {
         console.log(playerGuess);
         var currGuesses = this.state.guesses;
+        var currPegs = this.state.pegs;
+        currPegs.unshift(this.getPegs(playerGuess));
         currGuesses.unshift(playerGuess);
-        this.setState({ guesses: currGuesses });
+        this.setState({ guesses: currGuesses, pegs: currPegs });
+    };
+    GameSection.prototype.getPegs = function (playerGuess) {
+        var pegResult = [null, null, null, null];
+        var whitePegCount = 0;
+        var secretObj = { white: 0, yellow: 0, orange: 0, red: 0, purple: 0, green: 0 };
+        var guessObj = { white: 0, yellow: 0, orange: 0, red: 0, purple: 0, green: 0 };
+        $.each(this.state.secretCode, function (idx, ele) {
+            secretObj[ele] += 1;
+        });
+        $.each(playerGuess, function (idx, ele) {
+            guessObj[ele] += 1;
+        });
+        console.log(secretObj);
+        console.log(guessObj);
+        pegResult = ["white", "white", "white", "white"];
+        return pegResult;
     };
     GameSection.prototype.gameRenderer = function () {
         if (this.state.codeSet) {
@@ -134,7 +152,7 @@ var GameSection = (function (_super) {
             return (React.createElement(chooseCode_1.ChooseCode, { gameCallback: this.onCodeSubmit.bind(this) }));
         }
     };
-    GameSection.prototype.renderEachBall = function (guessArr) {
+    GameSection.prototype.renderEachBall = function (idx, guessArr) {
         var ballArr = [];
         $.each(guessArr, function (idx, ele) {
             ballArr.push(React.createElement("div", { key: idx, className: "w3-col m2" },
@@ -142,11 +160,19 @@ var GameSection = (function (_super) {
         });
         ballArr.push(React.createElement("div", { key: 4, className: "w3-col m4" },
             React.createElement("div", { className: "w3-row" },
-                React.createElement("div", { className: "w3-col m12" },
-                    React.createElement("div", { className: "peg white" }))),
+                React.createElement("div", { className: "w3-col m4" },
+                    React.createElement("div", { className: "peg-placeholder" }, "x")),
+                React.createElement("div", { className: "w3-col m4" },
+                    React.createElement("div", { className: "peg peg-top " + this.state.pegs[idx][0] })),
+                React.createElement("div", { className: "w3-col m2" },
+                    React.createElement("div", { className: "peg peg-top " + this.state.pegs[idx][1] }))),
             React.createElement("div", { className: "w3-row" },
-                React.createElement("div", { className: "w3-col m12" },
-                    React.createElement("div", { className: "peg" })))));
+                React.createElement("div", { className: "w3-col m4" },
+                    React.createElement("div", { className: "peg-placeholder" }, "x")),
+                React.createElement("div", { className: "w3-col m4" },
+                    React.createElement("div", { className: "peg " + this.state.pegs[idx][2] })),
+                React.createElement("div", { className: "w3-col m2" },
+                    React.createElement("div", { className: "peg " + this.state.pegs[idx][3] })))));
         return ballArr;
     };
     GameSection.prototype.renderGuesses = function () {
@@ -157,7 +183,7 @@ var GameSection = (function (_super) {
         }
         else {
             $.each(this.state.guesses, function (idx, ele) {
-                guessRender.push(React.createElement("div", { key: idx, className: "w3-row guess-row" }, bindThis.renderEachBall(ele)));
+                guessRender.push(React.createElement("div", { key: idx, className: "w3-row guess-row" }, bindThis.renderEachBall(idx, ele)));
             });
             return guessRender;
         }
@@ -231,6 +257,18 @@ var Navigation = (function (_super) {
     };
     return Navigation;
 }(React.Component));
+function randomCode() {
+    var randCode = [];
+    var allColors = ["white", "yellow", "orange", "red", "purple", "green"];
+    function getIndex() {
+        var rand = Math.round((Math.random() * 100));
+        return (rand % 6);
+    }
+    for (var i = 0; i < 4; i++) {
+        randCode.push(allColors[getIndex()]);
+    }
+    return randCode;
+}
 ReactDOM.render(React.createElement(titleSection_1.TitleArea, null), document.getElementById('title_section'));
 ReactDOM.render(React.createElement(Navigation, null), document.getElementById('main'));
 location.hash = "#nav";
@@ -243,7 +281,7 @@ window.onhashchange = function () {
         ReactDOM.render(React.createElement(gameSection_1.GameSection, { codeSet: false, secretCode: [null, null, null, null] }), document.getElementById('main'));
     }
     else if (whichClass == "#one") {
-        ReactDOM.render(React.createElement(gameSection_1.GameSection, null), document.getElementById('main'));
+        ReactDOM.render(React.createElement(gameSection_1.GameSection, { codeSet: true, secretCode: randomCode() }), document.getElementById('main'));
     }
     else {
         ReactDOM.render(React.createElement("div", null, "No Bueno"), document.getElementById('main'));

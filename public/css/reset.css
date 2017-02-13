@@ -55,6 +55,14 @@ a {
     border: solid 1pt black;
 }
 
+.peg-top {
+    margin-bottom: 5px;
+}
+
+.peg-placeholder {
+    color: rgb(179, 220, 255);
+}
+
 
 
 

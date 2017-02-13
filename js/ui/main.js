@@ -56,6 +56,18 @@ var Navigation = (function (_super) {
     };
     return Navigation;
 }(React.Component));
+function randomCode() {
+    var randCode = [];
+    var allColors = ["white", "yellow", "orange", "red", "purple", "green"];
+    function getIndex() {
+        var rand = Math.round((Math.random() * 100));
+        return (rand % 6);
+    }
+    for (var i = 0; i < 4; i++) {
+        randCode.push(allColors[getIndex()]);
+    }
+    return randCode;
+}
 ReactDOM.render(React.createElement(titleSection_1.TitleArea, null), document.getElementById('title_section'));
 ReactDOM.render(React.createElement(Navigation, null), document.getElementById('main'));
 location.hash = "#nav";
@@ -68,7 +80,7 @@ window.onhashchange = function () {
         ReactDOM.render(React.createElement(gameSection_1.GameSection, { codeSet: false, secretCode: [null, null, null, null] }), document.getElementById('main'));
     }
     else if (whichClass == "#one") {
-        ReactDOM.render(React.createElement(gameSection_1.GameSection, null), document.getElementById('main'));
+        ReactDOM.render(React.createElement(gameSection_1.GameSection, { codeSet: true, secretCode: randomCode() }), document.getElementById('main'));
     }
     else {
         ReactDOM.render(React.createElement("div", null, "No Bueno"), document.getElementById('main'));
