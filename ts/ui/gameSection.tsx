@@ -46,12 +46,12 @@ export class GameSection extends React.Component<any, any> {
         ballArr.push(<div key={4} className="w3-col m4">
                          <div className="w3-row">
                              <div className="w3-col m12">
-                                 Hello
+                                 <div className="peg white"></div>
                              </div>    
                          </div>
                          <div className="w3-row">
                              <div className="w3-col m12">
-                                 World
+                                 <div className="peg"></div>
                              </div>    
                          </div>                             
                      </div>);

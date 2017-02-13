@@ -142,9 +142,11 @@ var GameSection = (function (_super) {
         });
         ballArr.push(React.createElement("div", { key: 4, className: "w3-col m4" },
             React.createElement("div", { className: "w3-row" },
-                React.createElement("div", { className: "w3-col m12" }, "Hello")),
+                React.createElement("div", { className: "w3-col m12" },
+                    React.createElement("div", { className: "peg white" }))),
             React.createElement("div", { className: "w3-row" },
-                React.createElement("div", { className: "w3-col m12" }, "World"))));
+                React.createElement("div", { className: "w3-col m12" },
+                    React.createElement("div", { className: "peg" })))));
         return ballArr;
     };
     GameSection.prototype.renderGuesses = function () {
