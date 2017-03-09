@@ -107,6 +107,12 @@ body {
     background-color: rgb(179, 220, 255);
 }
 
+@media (max-width: 500px) {
+    body {
+        background-color: rgb(150,200,12);
+    }
+}
+
 .title_area {
     text-align: center;
     font-size: 40px;
