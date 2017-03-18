@@ -34,7 +34,7 @@ a {
 .ball {
     height: 50px;
     width: 50px;
-    margin: auto;
+    margin: 10px;
     border-radius: 25px;
     border: solid 1pt black;
 }
@@ -107,10 +107,26 @@ body {
     background-color: rgb(179, 220, 255);
 }
 
+.try-inline {
+    display: inline-block;
+}
+
 @media (max-width: 500px) {
     body {
         background-color: rgb(150,200,12);
     }
+    .ball {
+        height: 16px;
+        width: 16px;
+        margin: auto;
+        border-radius: 8px;
+        border: solid 1pt black;       
+    }
+    #main {
+        margin-top: 10px;
+        margin-left: 0px;
+        margin-right: 0px;
+    }   
 }
 
 .title_area {

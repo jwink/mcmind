@@ -241,7 +241,7 @@ var Navigation = (function (_super) {
         var colors = [];
         var bindThis = this;
         $.each(bindThis.state.whichColors, function (idx, ele) {
-            colors.push(React.createElement("div", { key: idx, className: "w3-col m2" },
+            colors.push(React.createElement("div", { key: idx, className: "try-inline" },
                 React.createElement("div", { onClick: bindThis.ballClicked.bind(bindThis, ele), className: "ball " + ele })));
         });
         return colors;

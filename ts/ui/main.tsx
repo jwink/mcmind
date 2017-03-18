@@ -15,7 +15,7 @@ class Navigation extends React.Component<any, any> {
         let bindThis = this;
         $.each(bindThis.state.whichColors, function(idx, ele) {
             colors.push(<div key={idx} 
-                             className="w3-col m2">
+                             className="try-inline">
                                  <div onClick={bindThis.ballClicked.bind(bindThis, ele)} className={"ball " + ele}></div>
                         </div>);
 
