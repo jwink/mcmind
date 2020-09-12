@@ -7,6 +7,6 @@ export declare class ChooseCode extends React.Component<any, any> {
     boxSelected(section: any): void;
     codeSubmit(): void;
     codeChooser(): any[];
-    submitMessage(): JSX.Element | "";
+    submitMessage(): "" | JSX.Element;
     render(): JSX.Element;
 }
