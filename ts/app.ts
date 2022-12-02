@@ -16,6 +16,8 @@ app.listen(port);
 
 console.log(`server up and running on ${ip.address()}:8080`);
 console.log('hello world');
+console.log('hello world');
+
 
 
 
